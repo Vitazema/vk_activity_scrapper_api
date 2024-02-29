@@ -1,0 +1,9 @@
+requests
+argparse
+pymongo
+flask
+flask_cors
+scipy
+rdflib
+natasha
+dadata

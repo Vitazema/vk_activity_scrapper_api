@@ -1,0 +1,35 @@
+services:
+  bot-api:
+    build: ./
+    container_name: bot-api
+    environment:
+      - PYTHONBUFFERED=True
+      - ENVIRONMENT=production
+      - MONGO_PRODUCTION_HOST=mongodb://host.docker.internal:27017/
+      - TZ=Europe/Moscow
+    restart: unless-stopped
+    ports:
+      - "50000:50000"
+    command: python main.py --s local_settings.json
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  bot-web:
+    build: ../vk_spider_web
+    container_name: bot-web
+    restart: unless-stopped
+    volumes:
+      - node-modules:/app/node_modules
+    ports:
+      - 30000:80
+
+volumes:
+  node-modules:
+  mongo-data:

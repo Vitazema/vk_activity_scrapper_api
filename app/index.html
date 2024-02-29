@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/custom.css')}}">
+    <title>Flask app with logging</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        var output = document.getElementById('output');
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '{{ url_for('bot') }}', true);
+        xhr.send();
+        setInterval(function() {
+          output.textContent = xhr.responseText;
+          // auto-scroll to bottom
+          logging_window.scrollTop = logging_window.scrollHeight;
+        }, 500);
+      });
+    </script>
+  </head>
+  <body id="main">
+    <div class="row">
+      <h2 align="center">Logging will appear here:</h2>
+      <div class="logging_window">
+        <pre id="output"></pre>
+      </div>
+    </div>
+  </body>
+</html>
